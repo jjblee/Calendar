@@ -16,14 +16,25 @@ public class Calendar {
 	public static void main(String[] args) {
 		
 		Scanner scanner=new Scanner(System.in);
+
+		System.out.println("반복 횟수를 입력하세요.");
+		int repeat=scanner.nextInt();
+		
 		System.out.println("달을 입력하세요.");
-		int input=scanner.nextInt();
 		
 		//static 메소드는 객체를 생성할 필요 없음
-		System.out.printf("%d월은 %d일까지 있습니다.\n", input, maxDateMonth(input)); //printf는 자동으로 줄바꿈이 되지 않음
+		for(int i=0; i<repeat; i++) {
+			int input=scanner.nextInt();	
+			System.out.printf("%d월은 %d일까지 있습니다.\n", input, maxDateMonth(input)); //printf는 자동으로 줄바꿈이 되지 않음			
+		}
+		
 		//non static 메소드를 사용할 땐 객체를 생성해야함!
+		int i=0;
 		Calendar cal=new Calendar();
-		System.out.printf("%d월은 %d일까지 있습니다.\n", input, cal.maxDateMonth2(input)); 
+		while(i<repeat) {
+			int input=scanner.nextInt();						
+			System.out.printf("%d월은 %d일까지 있습니다.\n", input, cal.maxDateMonth2(input)); 			
+		}
 		
 		scanner.close();
 	}
