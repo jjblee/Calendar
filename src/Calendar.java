@@ -20,22 +20,27 @@ public class Calendar {
 		System.out.println("반복 횟수를 입력하세요.");
 		int repeat=scanner.nextInt();
 		
-		System.out.println("달을 입력하세요.");
-		
 		//static 메소드는 객체를 생성할 필요 없음
 		for(int i=0; i<repeat; i++) {
+			System.out.println("달을 입력하세요.");
 			int input=scanner.nextInt();	
 			System.out.printf("%d월은 %d일까지 있습니다.\n", input, maxDateMonth(input)); //printf는 자동으로 줄바꿈이 되지 않음			
 		}
+		System.out.println("for문 종료"); 
 		
 		//non static 메소드를 사용할 땐 객체를 생성해야함!
-		int i=0;
+		int input=1;
 		Calendar cal=new Calendar();
-		while(i<repeat) {
-			int input=scanner.nextInt();						
+		while(true) {
+			System.out.println("달을 입력하세요.");
+			input=scanner.nextInt();
+			if(input<1 || input>12) {
+				break;
+			}
 			System.out.printf("%d월은 %d일까지 있습니다.\n", input, cal.maxDateMonth2(input)); 			
 		}
 		
+		System.out.printf("종료"); 			
 		scanner.close();
 	}
 }
