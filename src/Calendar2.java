@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class LeapYearCalendar {
+public class Calendar2 {
 	private static final String PROMPT="cal> ";
 	private static int[] MaxDATE={31,28,31,30,31,30,31,31,30,31,30,31};
 	
