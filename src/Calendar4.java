@@ -1,7 +1,6 @@
 import java.util.Scanner;
-import java.util.HashMap;
 
-public class Calendar3 {
+public class Calendar4 {
 	private static final String PROMPT="cal> ";
 	private static int[] MaxDATE={31,28,31,30,31,30,31,31,30,31,30,31};
 	
@@ -15,41 +14,51 @@ public class Calendar3 {
 		}
 	}
 	
-	static int tap=1; //왜 static 해야 되지?
-	public static void tapmap(String day) {
-		HashMap<String, Integer> map=new HashMap<String, Integer>();
-		map.put("일", 0);
-		map.put("월", 1);
-		map.put("화", 2);
-		map.put("수", 3);
-		map.put("목", 4);
-		map.put("금", 5);
-		map.put("토", 6);
-		tap=map.get(day);
+	//A와 B계산하는 메소드
+	static int remainder;
+	public static void dDay(int year, int month) {
+		int count=0;
+		for(int i=1583; i<year; i++) {
+			if(i%4==0 && (i%100!=0 || i%400==0)) {
+				count=count+1;
+			}
+		}
+		int a=(year-1583)*365+count;
+		
+		leapYear(year);
+		int b=0;
+		for(int i=1; i<month; i++) {
+			b=b+MaxDATE[i-1];
+		}
+		
+		if(year==1583&&month==1) {
+			remainder=6;
+		} else {
+			remainder=(a+b-1)%7;			
+		}
 	}
+	
+	
 	
 	
 	public static void runPrompt() {
 		Scanner scanner=new Scanner(System.in);
 		int year=1;
 		int month=1; //while문 밖에서도 사용하기 위함!
-		String day;
 		while(true) {
-			System.out.println("년도를 입력하세요.");
+			System.out.println("년도를 입력하세요(1583년 이후로 입력 가능).");
 			System.out.print(PROMPT); //줄바꿈 없음
 			year=scanner.nextInt();
 			System.out.println("월을 입력하세요.");
 			System.out.print(PROMPT); //줄바꿈 없음
 			month=scanner.nextInt();
-			System.out.println("첫번째 요일을 입력하세요.");
-			System.out.print(PROMPT); //줄바꿈 없음
-			day=scanner.next();
+			
 			if(month==-1) {
 				break;
 			} else if(month>12) {
 				continue;
 			}
-			tapmap(day);
+			dDay(year, month);
 			leapYear(year);
 			printCalendar(year, month);
 		}
@@ -63,14 +72,14 @@ public class Calendar3 {
 		System.out.println("---------------------");
 
 		int maxDate=MaxDateMonth(month);
-		for(int j=0; j<tap; j++) {
+		for(int j=0; j<remainder; j++) {
 			System.out.printf("   ");			
 		} //빈칸 0 1 2 3 4 5 6 
 		for(int i=1; i<=maxDate; i++) {
 			System.out.printf("%3d",i);
-			if(i%7==(7-tap)) {
+			if(i%7==(7-remainder)) {
 				System.out.printf("\n");
-			} else if(tap==0 && i%7==0) {
+			} else if(remainder==0 && i%7==0) {
 				System.out.println();
 			}
 		} //나머지가 7 6 5 4 3 2 1
